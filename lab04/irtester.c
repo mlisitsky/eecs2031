@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <wiringPi.h>
+#include "ifttt.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     }
     printf("Waiting for event\n");
     while(digitalRead(0) == 0) {
+	   ifttt("http://red.eecs.yorku.ca:8080/trigger/event/with/key/mlisits", "my1", "my 2", "my 33333"); 
 	    digitalWrite (2, HIGH);
 	    delay (300);
 	    digitalWrite (2, LOW);
