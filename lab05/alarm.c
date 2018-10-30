@@ -40,21 +40,21 @@ void alarmOff() {
 }
 
 void alarmArming() {
-	int STATE = HIGH;
+	int state = 1;
 	time_t time10 = time(NULL) + 10;
 	time_t current = time(NULL);
 	time_t prev = time(NULL);
+
 	while (current < time10) {
-		digitalWrite(RED_LED, STATE);
+		current = time(NULL);
 		if (current - prev >= 1){
-			if (STATE == HIGH) {
-				 STATE = LOW;
+			if (state == 1) {
+				state = 0;
+			} else {
+			       	state = 1;
 			}
-			else {
-			       	STATE = HIGH;
-			}
-		digitalWrite(RED_LED, STATE);
 		}
+			digitalWrite(RED_LED, state);
 	}
 
 	digitalWrite(BLUE_LED, HIGH);
