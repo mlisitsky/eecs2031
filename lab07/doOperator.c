@@ -29,6 +29,7 @@ static int op_swap(struct tokenStack *stack);/*Operation 9*/
 static int op_rem(struct tokenStack *stack);/*Operation 10*/
 static int op_rot(struct tokenStack *stack);/*Operation 11*/
 static int op_rotmin(struct tokenStack *stack);/*Operation 12*/
+static int op_help(struct tokenStack *stack);/*Operation 13*/
 
 static struct operator_struct {
   char *name;
@@ -50,6 +51,7 @@ static struct operator_struct {
   {"MOD", op_rem},
   {"ROT", op_rot},
   {"ROTMINUS", op_rotmin},
+  {"HELP", op_help},
   {(char *)NULL, (int(*)(struct tokenStack *)) NULL}
 };
 
@@ -269,4 +271,22 @@ static int op_rotmin(struct tokenStack *stack)
   pushInt(stack, v3);
   pushInt(stack, v2);
   return(0);
+}
+
+static int op_help(struct tokenStack *stack)
+{
+
+	printf("HELP (—) - print out all commands plus a line of documentation.\n");
+
+	printf("*   (n1 n2 — product) - push n1*n2 \n");
+	printf("/   (n1 n2  — quotient) - push n1/n2 \n");
+	printf("GT  (n1 n2  —  gt)  -push 1 if n1 > n2 and 0 otherwise \n");
+	printf("LT  (n1 n2 — lt) -push 1 if n1 < n2 and 0 otherwise \n");
+	printf("GE (n1 n2  —  ge)  -push 1 if n1 >= n2 and 0 otherwise \n");
+	printf("LE (n1 n2 — le) -push 1 if n1 <= n2 and 0 otherwise \n");
+	printf("EQ (n1 n2 — eq) -push 1 if n1 == n2 and 0 otherwise \n");
+	printf("SWAP   (n1 n2 — n2 n1) - swap the order of the top two elements on the stack \n");
+	printf("ROT (n1 n2 n3 — n2 n3 n1) - rotate top 3 elements on the stack \n");
+	printf("ROTMINUS (n1 n2 n3 — n3 n1 n2) - rotate top 3 elements on the stack \n");
+	return(0);
 }
