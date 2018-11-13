@@ -35,9 +35,9 @@ static struct operator_struct {
   char *name;
   int (*fn_ptr)(struct tokenStack *);
 } ops[] = {
-  {"quit", op_quit},
-  {"print", op_print},
-  {"dump", op_dump},
+  {"QUIT", op_quit},
+  {"PRINT", op_print},
+  {"DUMP", op_dump},
   {"+", op_add},
   {"-", op_diff},
   {"*", op_product},
@@ -73,13 +73,13 @@ static int popInt(struct tokenStack *s)
 /* YOU WRITE THIS */
 static void pushInt(struct tokenStack *s, int v)
 {
+  struct lexToken *token;
   token = allocToken();
   token->kind = LEX_TOKEN_NUMBER;
 
-  sprintf(token->symbol, "%d", v);
+  sprintf(token->symbol, "%d\n", v);
   pushTokenStack(s,token);
 
-  op_print(s);
 }
 
 int doOperator(struct tokenStack *stack, char *o)
@@ -148,7 +148,14 @@ static int op_quotient(struct tokenStack *stack)
   int v1, v2;
   v1 = popInt(stack);
   v2 = popInt(stack);
-  pushInt(stack, v2/v1);
+  if (v1 == 0)
+  {
+	printf("Cannot divide by zero! \n");
+  }
+  else
+  {
+  	pushInt(stack, v2/v1);
+  }
   return(0);
 }
 
@@ -276,8 +283,10 @@ static int op_rotmin(struct tokenStack *stack)
 static int op_help(struct tokenStack *stack)
 {
 
-	printf("HELP (—) - print out all commands plus a line of documentation.\n");
+	printf("HELP (—) - print out all commands plus a line of documentation.\n\n");
 
+	printf("+   (n1 n2 — product) - push n1 + n2 \n");
+	printf("-   (n1 n2  — quotient) - push n1 - n2 \n");
 	printf("*   (n1 n2 — product) - push n1*n2 \n");
 	printf("/   (n1 n2  — quotient) - push n1/n2 \n");
 	printf("GT  (n1 n2  —  gt)  -push 1 if n1 > n2 and 0 otherwise \n");
@@ -287,6 +296,8 @@ static int op_help(struct tokenStack *stack)
 	printf("EQ (n1 n2 — eq) -push 1 if n1 == n2 and 0 otherwise \n");
 	printf("SWAP   (n1 n2 — n2 n1) - swap the order of the top two elements on the stack \n");
 	printf("ROT (n1 n2 n3 — n2 n3 n1) - rotate top 3 elements on the stack \n");
-	printf("ROTMINUS (n1 n2 n3 — n3 n1 n2) - rotate top 3 elements on the stack \n");
+	printf("ROTMINUS (n1 n2 n3 — n3 n1 n2) - rotate top 3 elements on the stack \n\n");
+
+	printf("Type PRINT to return answer\n");
 	return(0);
 }
