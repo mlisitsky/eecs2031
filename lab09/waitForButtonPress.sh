@@ -14,4 +14,4 @@ do
 	let b=$(gpio read 5)
 done
 
-echo "Button Pressed!"
+echo "Setting Value..."
