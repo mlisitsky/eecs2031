@@ -1,18 +1,26 @@
 #!/bin/bash
 
 p=0
+b=$(gpio read 5)
 
 while :
 do
-	n=`gpio read 5`
-	if [ $n == 0 ] ;
-	then
+
+	until [ $b -eq 0 ]
+	do
+		let b=$(gpio read 5)
+	done
+
+	until [ $b -eq 1 ]
+	do
+		let b=$(gpio read 5)
+	
+	done
 		((p++))
 		echo $p
 		./setbits.sh $p
-		sleep 0.5
-	fi
-	if [ $p == 16 ] ;
+
+	if [ $p -eq 16 ] ;
 	then
 		gpio write 6 1
 		sleep 1
